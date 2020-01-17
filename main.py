@@ -31,15 +31,18 @@ def calculate_column(df):
 		df.loc[index, 'Received to Started'] = days_received_to_start
 	return df
 
+def create_csv(df, name):
+	return df.to_csv(name)
+
 df = pd.read_excel('Master Submitted Log.xlsx')
 df_new = pd.read_excel('Master Submitted Log New.xlsx')
 
-
 df = merge_workbooks(df_new, df)
 df = calculate_column(df)
-print(df)
 
-# final_df = merge_workbooks(df_new, df)
-# final_df = calculate_column(final_df)
-# final_df = clean_dates(final_df)
-# print(df_new)
+create_csv(df, 'MasterSubmitted.csv')
+
+
+
+
+
