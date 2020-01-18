@@ -13,6 +13,7 @@ def add_columns(df):
 	df['Received to Submitted'] = ''
 	df['Received to Started'] = ''
 	df['Started to Submitted'] = ''
+	df['Place'] = ''
 	return df	
 
 def merge_workbooks(df_new, df):
@@ -29,7 +30,10 @@ def calculate_column(df):
 		df.loc[index, 'Started to Submitted'] = days_start_to_submit
 		days_received_to_start = wd.networkdays(row['Received'], row['Started'])
 		df.loc[index, 'Received to Started'] = days_received_to_start
+		mfg_place = row['Type'][0:2]
+		df.loc[index, 'Place'] = mfg_place
 	return df
+
 
 def create_csv(df, name):
 	return df.to_csv(name)
