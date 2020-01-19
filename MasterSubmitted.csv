@@ -1,0 +1,9 @@
+,name,Received,Started,Submitted,Word,Received to Submitted,Started to Submitted,Received to Started,Type,Place
+0,Amazon,2020-01-02,2020-01-06,2020-01-07,word,4,2,3,JT-LSK-LIKE,JT
+1,Google,2020-01-03,2020-01-06,2020-01-07,word,3,2,2,JT-LSK-LIKE,JT
+2,Facebook,2020-01-02,2020-01-06,2020-01-07,word,4,2,3,JT-LSK-LIKE,JT
+3,Youtube,2020-01-02,2020-01-06,2020-01-07,word,4,2,3,KL-OLW-LIKE,KL
+4,Amazon,2020-01-03,2020-01-06,2020-01-07,word,3,2,2,KL-OLW-LIKE,KL
+5,Google,2020-01-03,2020-01-06,2020-01-07,word,3,2,2,KL-OLW-LIKE,KL
+6,Facebook,2020-01-03,2020-01-06,2020-01-07,word,3,2,2,JT-LSK-LIKE,JT
+7,Youtube,2020-01-03,2020-01-06,2020-01-07,word,3,2,2,HU-WE-LIKE,HU

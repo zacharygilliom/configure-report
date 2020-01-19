@@ -16,32 +16,29 @@ def add_columns(df):
 	df['Place'] = ''
 	return df	
 
-def merge_workbooks(df_new, df):
-	df_new = drop_columns(df_new)
-	df_new = add_columns(df_new)
-	df_final = df.append(df_new, ignore_index=True)
-	return df_final
+# def merge_workbooks(df_new, df):
+# 	df_new = drop_columns(df_new)
+# 	df_new = add_columns(df_new)
+# 	df_final = df.append(df_new, ignore_index=True)
+# 	return df_final
 
 def calculate_column(df):
 	for index, row in df.iterrows():
-		days_received_to_submit = wd.networkdays(row['Received'], row['Submitted'])
-		df.loc[index, 'Received to Submitted'] = days_received_to_submit
-		days_start_to_submit = wd.networkdays(row['Started'], row['Submitted'])
-		df.loc[index, 'Started to Submitted'] = days_start_to_submit
-		days_received_to_start = wd.networkdays(row['Received'], row['Started'])
-		df.loc[index, 'Received to Started'] = days_received_to_start
-		mfg_place = row['Type'][0:2]
-		df.loc[index, 'Place'] = mfg_place
+		df.loc[index, 'Received to Submitted'] = wd.networkdays(row['Received'], row['Submitted'])
+		df.loc[index, 'Started to Submitted'] = wd.networkdays(row['Started'], row['Submitted'])
+		df.loc[index, 'Received to Started'] = wd.networkdays(row['Received'], row['Started'])
+		df.loc[index, 'Place'] = row['Type'][0:2]
 	return df
-
 
 def create_csv(df, name):
 	return df.to_csv(name)
 
 df = pd.read_excel('Master Submitted Log.xlsx')
-df_new = pd.read_excel('Master Submitted Log New.xlsx')
+# df_new = pd.read_excel('Master Submitted Log New.xlsx')
 
-df = merge_workbooks(df_new, df)
+# df = merge_workbooks(df_new, df)
+df = drop_columns(df)
+df = add_columns(df)
 df = calculate_column(df)
 
 create_csv(df, 'MasterSubmitted.csv')
