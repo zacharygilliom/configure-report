@@ -16,12 +16,6 @@ def add_columns(df):
 	df['Place'] = ''
 	return df	
 
-# def merge_workbooks(df_new, df):
-# 	df_new = drop_columns(df_new)
-# 	df_new = add_columns(df_new)
-# 	df_final = df.append(df_new, ignore_index=True)
-# 	return df_final
-
 def calculate_column(df):
 	for index, row in df.iterrows():
 		df.loc[index, 'Received to Submitted'] = wd.networkdays(row['Received'], row['Submitted'])
@@ -33,14 +27,22 @@ def calculate_column(df):
 def create_csv(df, name):
 	return df.to_csv(name)
 
+def apply_transforms(df):
+	df = drop_columns(df)
+	df = add_columns(df)
+	df = calculate_column(df)
+	return df
+
+def get_area(df, df_reference):
+	df = df.merge(df_reference, on='name', how='left')
+	return df
+
 df = pd.read_excel('Master Submitted Log.xlsx')
-# df_new = pd.read_excel('Master Submitted Log New.xlsx')
+df_name = pd.read_excel('Name Log.xlsx')
 
-# df = merge_workbooks(df_new, df)
-df = drop_columns(df)
-df = add_columns(df)
-df = calculate_column(df)
-
+# print(df_name.head())
+df = apply_transforms(df)
+df = get_area(df, df_name)
 create_csv(df, 'MasterSubmitted.csv')
 
 

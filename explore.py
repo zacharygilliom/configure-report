@@ -9,6 +9,12 @@ from datetime import *
 	# print(df.dtypes)
 	# return df
 
+# def merge_workbooks(df_new, df):
+# 	df_new = drop_columns(df_new)
+# 	df_new = add_columns(df_new)
+# 	df_final = df.append(df_new, ignore_index=True)
+# 	return df_final
+
 
 df = pd.read_excel('Master Submitted Log.xlsx')
 
