@@ -37,13 +37,23 @@ def get_area(df, df_reference):
 	df = df.merge(df_reference, on='name', how='left')
 	return df
 
+def display_pivot(df):
+	table = df.pivot_table(
+		index=['Place','name'], 
+		values=['Received to Submitted', 'Started to Submitted', 'Received to Started'], 
+		aggfunc=np.mean)
+	return table
+
 df = pd.read_excel('Master Submitted Log.xlsx')
 df_name = pd.read_excel('Name Log.xlsx')
 
 # print(df_name.head())
 df = apply_transforms(df)
 df = get_area(df, df_name)
-create_csv(df, 'MasterSubmitted.csv')
+# create_csv(df, 'MasterSubmitted.csv')
+df_pivot = display_pivot(df)
+print(df_pivot)
+
 
 
 
