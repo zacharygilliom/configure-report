@@ -27,14 +27,15 @@ def calculate_column(df):
 def create_csv(df, name):
 	return df.to_csv(name)
 
+def get_area(df, df_reference):
+	df = df.merge(df_reference, on='name', how='left')
+	return df
+
 def apply_transforms(df):
 	df = drop_columns(df)
 	df = add_columns(df)
 	df = calculate_column(df)
-	return df
-
-def get_area(df, df_reference):
-	df = df.merge(df_reference, on='name', how='left')
+	df = get_area(df=df,df_reference=df_name)
 	return df
 
 def display_pivot(df):
@@ -47,12 +48,11 @@ def display_pivot(df):
 df = pd.read_excel('Master Submitted Log.xlsx')
 df_name = pd.read_excel('Name Log.xlsx')
 
-# print(df_name.head())
 df = apply_transforms(df)
-df = get_area(df, df_name)
+print(df.head())
 # create_csv(df, 'MasterSubmitted.csv')
-df_pivot = display_pivot(df)
-print(df_pivot)
+df_table = display_pivot(df)
+print(df_table)
 
 
 
