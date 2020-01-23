@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 import workdays as wd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set_style(style="darkgrid")
 
 # Excel Data File gets created with blank columns.  We want to take those out.
 def drop_columns(df):
@@ -102,19 +106,35 @@ def get_category(df, df_reference):
 	df = df.merge(df_reference, on='Received to Submitted', how='left')
 	return df
 
+def slice_name(df, val):
+	df = df[df['name'] == val]
+	return df
+
 # Import both our main spreadhseet and our reference table
 df = pd.read_excel('Master Submitted Log.xlsx')
 df_name = pd.read_excel('Name Log.xlsx')
+
 # Create Dataframe of another reference table.
 df_category = pd.DataFrame({'Received to Submitted': [i for i in range(0,200)]})
 df_category = create_category(df_category)
 
 # Apply all of our transformation functionsto our dataframe and save it as a CSV file
 df = apply_transforms(df)
-# print(df.head(30))
-create_csv(df, 'MasterSubmitted.csv')
+# create_csv(df, 'MasterSubmitted.csv')
 
 # Create our two pivot tables and print them out
 df_location_table = display_location_pivot(df)
 df_type_table = display_type_pivot(df)
 print(df_location_table, df_type_table)
+
+# simple barplots to show some of our data
+# sns.barplot(x=df['Type'], y=df['Received to Started'], hue=df['name'], palette="Dark2")
+# sns.barplot(x=df['Type'], y=df['Started to Submitted'], hue=df['name'], palette="Dark2")
+# sns.barplot(x=df['Type'], y=df['Received to Submitted'], hue=df['name'], palette="Dark2")
+# sns.catplot(x='name', y='Received to Submitted', kind='bar', data=df, hue='Type')
+
+# Added Distribution plots of some of our calculations.
+sns.kdeplot(data=df['Received to Submitted'], shade=False )
+sns.kdeplot(data=df['Started to Submitted'], shade=False)
+sns.kdeplot(data=df['Received to Started'], shade=False)
+plt.show() 
