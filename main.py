@@ -132,9 +132,19 @@ print(df_location_table, df_type_table)
 # sns.barplot(x=df['Type'], y=df['Started to Submitted'], hue=df['name'], palette="Dark2")
 # sns.barplot(x=df['Type'], y=df['Received to Submitted'], hue=df['name'], palette="Dark2")
 # sns.catplot(x='name', y='Received to Submitted', kind='bar', data=df, hue='Type')
+# plt.show()
+
 
 # Added Distribution plots of some of our calculations.
-sns.kdeplot(data=df['Received to Submitted'], shade=False )
-sns.kdeplot(data=df['Started to Submitted'], shade=False)
-sns.kdeplot(data=df['Received to Started'], shade=False)
-plt.show() 
+# sns.kdeplot(data=df['Received to Submitted'], shade=False )
+# sns.kdeplot(data=df['Started to Submitted'], shade=False)
+# sns.kdeplot(data=df['Received to Started'], shade=False)
+# plt.show() 
+
+# some more EDA
+
+# sns.barlot(x=df[df['Place'] == 'JT']['name'], y=df['Received to Submitted'], palette="Dark2")
+for company in df.name.unique():
+	sns.kdeplot(data=df[df['name'] == company]['Received to Submitted'], shade=False, label=company)
+
+plt.show()
