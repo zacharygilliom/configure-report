@@ -65,8 +65,8 @@ def display_location_pivot(df):
 
 def display_type_pivot(df):
 	table = df.pivot_table(
-		index='Type',
-		values='Received to Submitted',
+		index=['Type'],
+		values=['Received to Submitted'],
 		aggfunc=np.mean)
 	return table
 
@@ -127,8 +127,12 @@ df_category = pd.DataFrame({'Received to Submitted': [i for i in range(0,200)]})
 df_category = create_category(df_category)
 
 
-# Apply all of our transformation functionsto our dataframe and save it as a CSV file
+# Apply all of our transformation functions to our dataframe and save it as a CSV file
 df = apply_transforms(df)
+df['Received to Submitted'] = pd.to_numeric(df['Received to Submitted'])
+df['Received to Started'] = pd.to_numeric(df['Received to Started'])
+df['Started to Submitted'] = pd.to_numeric(df['Started to Submitted'])
+
 
 # Uncomment this before finalizing program, so that you will actually create the desired CSV output.
 # create_csv(df, 'MasterSubmitted.csv')
@@ -137,8 +141,8 @@ df = apply_transforms(df)
 # Create our two pivot tables and print them out
 df_location_table = display_location_pivot(df)
 df_type_table = display_type_pivot(df)
-print(df_location_table, df_type_table)
-
+print(df_location_table)
+print(df_type_table)
 
 
 # simple barplots to show some of our data
@@ -158,7 +162,7 @@ print(df_location_table, df_type_table)
 # some more EDA
 
 # sns.barlot(x=df[df['Place'] == 'JT']['name'], y=df['Received to Submitted'], palette="Dark2")
+
 for company in df.name.unique():
 	sns.kdeplot(data=df[df['name'] == company]['Received to Submitted'], shade=False, label=company)
-
 plt.show()
